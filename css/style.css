@@ -8,31 +8,48 @@
 }
 
 :root {
-  --brand-dark:   #03031a;
-  --brand-mid:    #050596;
-  --brand-accent: #f5a800;
-  --radius:       20px;
+  --accent: #f5a800;
+  --radius: 24px;
   --font-display: 'Bebas Neue', sans-serif;
-  --font-body:    'DM Sans', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  /* Glass tokens */
+  --glass-fill:      rgba(255, 255, 255, 0.07);
+  --glass-border:    rgba(255, 255, 255, 0.20);
+  --glass-shine-top: rgba(255, 255, 255, 0.30);
+  --glass-blur:      blur(28px) saturate(180%) brightness(1.08);
+  --glass-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.32),
+    inset 0 -1px 0 rgba(255,255,255,0.06),
+    inset 1px 0 0 rgba(255,255,255,0.10),
+    inset -1px 0 0 rgba(255,255,255,0.04),
+    0 32px 80px rgba(0,0,40,0.55),
+    0 8px 24px rgba(0,0,20,0.35);
 }
 
 html {
   -webkit-text-size-adjust: 100%;
 }
 
+/* Vivid background — essential for glass to read */
 body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #c8cde4;
-  background-image:
-    radial-gradient(ellipse at 20% 20%, rgba(5,5,180,.15) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 80%, rgba(245,168,0,.10) 0%, transparent 60%);
   font-family: var(--font-body);
-  padding: 24px 16px 40px;
+  padding: 28px 16px 44px;
   gap: 24px;
+  color: #fff;
+
+  background-color: #07081e;
+  background-image:
+    radial-gradient(ellipse 70% 55% at 10% 20%,  rgba(30, 80, 255, 0.65)  0%, transparent 65%),
+    radial-gradient(ellipse 55% 65% at 90% 75%,  rgba(90, 10, 200, 0.50)  0%, transparent 65%),
+    radial-gradient(ellipse 45% 45% at 55% 50%,  rgba(0,  120, 220, 0.30) 0%, transparent 65%),
+    radial-gradient(ellipse 35% 30% at 78% 12%,  rgba(245,168,  0, 0.18)  0%, transparent 55%),
+    radial-gradient(ellipse 30% 30% at 20% 85%,  rgba(20, 200, 180, 0.12) 0%, transparent 55%);
 }
 
 /* Botão voltar */
@@ -43,24 +60,29 @@ body {
   gap: 6px;
   text-decoration: none;
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  color: var(--brand-mid);
-  letter-spacing: .06em;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: .08em;
   text-transform: uppercase;
   padding: 8px 18px;
-  border: 1.5px solid var(--brand-mid);
   border-radius: 100px;
-  background: rgba(255,255,255,.55);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  transition: background .2s, color .2s;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-fill);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.28),
+    0 4px 16px rgba(0,0,30,0.3);
+  transition: background .2s, box-shadow .2s;
   -webkit-tap-highlight-color: transparent;
 }
 .back-link:active,
 .back-link:hover {
-  background: var(--brand-mid);
-  color: #fff;
+  background: rgba(255,255,255,0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.38),
+    0 8px 24px rgba(0,0,30,0.4);
 }
 .back-link::before {
   content: '←';
@@ -76,42 +98,85 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(160deg, #03031a 0%, #06076b 50%, #0a0ab5 100%);
-  box-shadow:
-    0 2px 4px rgba(0,0,0,.08),
-    0 16px 48px rgba(3,3,26,.52),
-    0 0 0 1px rgba(255,255,255,.06);
   color: #fff;
+
+  /* Glass surface */
+  background: rgba(20, 40, 130, 0.28);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
 }
 
+/* Specular top highlight on the card */
 .cartao::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.13) 0%,
+    rgba(255,255,255,0.04) 35%,
+    transparent 100%
+  );
   pointer-events: none;
-  z-index: 0;
+  z-index: 10;
+  border-radius: var(--radius) var(--radius) 0 0;
 }
 
-/* Header do cartão */
+/* Refraction shimmer line */
+.cartao::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 18%;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255,255,255,0.18) 20%,
+    rgba(255,255,255,0.06) 60%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Header do cartão — glass panel */
 .painel-esq {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 12px;
   padding: 16px 20px;
-  background: rgba(0,0,0,.30);
-  border-bottom: 1px solid rgba(255,255,255,.07);
   position: relative;
   z-index: 2;
+  background: rgba(0, 0, 30, 0.22);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+/* Inner shine on header */
+.painel-esq::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: rgba(255,255,255,0.35);
+  pointer-events: none;
 }
 
 .logo-estrela {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   object-fit: contain;
   flex-shrink: 0;
-  filter: drop-shadow(0 0 8px rgba(245,168,0,.55));
+  filter:
+    drop-shadow(0 0 6px rgba(245,168,0,0.7))
+    drop-shadow(0 0 16px rgba(245,168,0,0.35));
 }
 
 .instituicao {
@@ -121,18 +186,19 @@ body {
 .inst-modulo {
   display: block;
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: 21px;
   letter-spacing: .06em;
-  color: var(--brand-accent);
+  color: var(--accent);
+  text-shadow: 0 0 16px rgba(245,168,0,0.45);
 }
 
 .inst-sub {
   display: block;
-  font-size: 9px;
+  font-size: 8.5px;
   font-weight: 300;
-  letter-spacing: .18em;
+  letter-spacing: .2em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.55);
+  color: rgba(255,255,255,0.50);
 }
 
 .divider {
@@ -141,11 +207,11 @@ body {
 
 .tipo-cartao {
   margin-left: auto;
-  font-size: 8px;
+  font-size: 7.5px;
   font-weight: 600;
-  letter-spacing: .2em;
+  letter-spacing: .22em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.28);
+  color: rgba(255,255,255,0.22);
   writing-mode: vertical-rl;
   text-orientation: mixed;
   rotate: 180deg;
@@ -164,10 +230,10 @@ body {
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(3,3,26,.4) 0%,
-    transparent 15%,
-    transparent 75%,
-    rgba(5,5,107,.95) 100%
+    rgba(10,20,100,0.30) 0%,
+    transparent 18%,
+    transparent 65%,
+    rgba(10,20,100,0.90) 100%
   );
   z-index: 1;
 }
@@ -176,51 +242,58 @@ body {
   width: 100%;
   height: auto;
   display: block;
-  filter: grayscale(10%) contrast(1.06);
+  filter: contrast(1.05) saturate(0.9);
 }
 
-/* Informações */
+/* Informações — glass panel */
 .conteudo {
   position: relative;
   z-index: 2;
-  padding: 24px 24px 28px;
+  padding: 22px 22px 28px;
   display: flex;
   flex-direction: column;
+  background: rgba(10, 20, 80, 0.18);
+  border-top: 1px solid rgba(255,255,255,0.10);
 }
 
 .label-id {
-  font-size: 8.5px;
+  font-size: 8px;
   font-weight: 600;
-  letter-spacing: .32em;
+  letter-spacing: .34em;
   text-transform: uppercase;
-  color: var(--brand-accent);
-  opacity: .8;
+  color: var(--accent);
+  opacity: 0.75;
   margin-bottom: 8px;
 }
 
 .nome-aluno {
   font-family: var(--font-display);
-  font-size: 32px;
+  font-size: 31px;
   letter-spacing: .04em;
   text-transform: uppercase;
   line-height: 1.05;
   color: #fff;
-  margin-bottom: 14px;
+  text-shadow: 0 2px 12px rgba(0,0,40,0.4);
+  margin-bottom: 12px;
 }
 
+/* Badge — glass pill */
 .badge-curso {
   display: inline-block;
   align-self: flex-start;
   padding: 5px 14px;
-  border: 1px solid rgba(245,168,0,.4);
   border-radius: 100px;
-  font-size: 9.5px;
+  border: 1px solid rgba(245,168,0,0.38);
+  background: rgba(245,168,0,0.10);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 0 rgba(245,168,0,0.20);
+  font-size: 9px;
   font-weight: 600;
-  letter-spacing: .12em;
+  letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--brand-accent);
-  background: rgba(245,168,0,.08);
-  margin-bottom: 22px;
+  color: var(--accent);
+  margin-bottom: 20px;
 }
 
 .infos {
@@ -236,19 +309,19 @@ body {
 }
 
 .info-label {
-  font-size: 8px;
+  font-size: 7.5px;
   font-weight: 600;
-  letter-spacing: .22em;
+  letter-spacing: .24em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.35);
-  min-width: 48px;
+  color: rgba(255,255,255,0.30);
+  min-width: 46px;
   flex-shrink: 0;
 }
 
 .info-valor {
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 300;
-  color: rgba(255,255,255,.85);
+  color: rgba(255,255,255,0.82);
   letter-spacing: .02em;
 }
 
@@ -257,18 +330,18 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 8.5px;
+  font-size: 8px;
   font-weight: 600;
-  letter-spacing: .18em;
+  letter-spacing: .2em;
   text-transform: uppercase;
-  color: rgba(255,255,255,.35);
+  color: rgba(255,255,255,0.28);
 }
 
 .validade-chip span {
-  color: rgba(255,255,255,.7);
+  color: rgba(255,255,255,0.65);
   font-weight: 400;
-  font-size: 11.5px;
-  letter-spacing: .05em;
+  font-size: 11px;
+  letter-spacing: .04em;
 }
 
 /* Página index */
@@ -276,29 +349,32 @@ body {
   width: 100%;
   max-width: 480px;
   text-align: center;
-  padding: 32px 20px 48px;
+  padding: 28px 20px 48px;
 }
 
 .index-logo {
   width: 64px;
   margin-bottom: 14px;
-  filter: drop-shadow(0 0 14px rgba(245,168,0,.4));
+  filter:
+    drop-shadow(0 0 10px rgba(245,168,0,0.6))
+    drop-shadow(0 0 28px rgba(245,168,0,0.25));
 }
 
 .index-title {
   font-family: var(--font-display);
-  font-size: 52px;
+  font-size: 56px;
   letter-spacing: .06em;
-  color: var(--brand-mid);
+  color: rgba(255,255,255,0.92);
   line-height: 1;
+  text-shadow: 0 0 40px rgba(80,120,255,0.5);
 }
 
 .index-sub {
-  font-size: 10px;
-  letter-spacing: .22em;
+  font-size: 9.5px;
+  letter-spacing: .26em;
   text-transform: uppercase;
-  color: rgba(3,3,26,.38);
-  margin-top: 6px;
+  color: rgba(255,255,255,0.32);
+  margin-top: 8px;
   margin-bottom: 36px;
 }
 
@@ -309,38 +385,43 @@ body {
   list-style: none;
 }
 
+/* Glass pill links */
 .grid-alunos a {
   display: flex;
   align-items: center;
   justify-content: space-between;
   text-decoration: none;
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 600;
   letter-spacing: .05em;
   text-transform: uppercase;
-  color: var(--brand-mid);
+  color: rgba(255,255,255,0.85);
   padding: 14px 16px;
-  border: 1.5px solid rgba(5,5,150,.22);
-  border-radius: 14px;
-  background: rgba(255,255,255,.65);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: background .2s, border-color .2s, color .2s, box-shadow .2s;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.25),
+    0 4px 16px rgba(0,0,30,0.3);
+  transition: background .2s, box-shadow .2s;
   -webkit-tap-highlight-color: transparent;
 }
 
 .grid-alunos a:active,
 .grid-alunos a:hover {
-  background: var(--brand-mid);
-  border-color: var(--brand-mid);
+  background: rgba(255,255,255,0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    0 8px 28px rgba(30,80,255,0.35);
   color: #fff;
-  box-shadow: 0 8px 20px rgba(5,5,180,.32);
 }
 
 .grid-alunos a::after {
   content: '→';
-  opacity: .5;
+  opacity: 0.45;
   font-size: 15px;
 }
 
@@ -348,31 +429,19 @@ body {
 @media (min-width: 700px) {
 
   body {
-    padding: 48px 24px;
+    padding: 52px 24px;
     gap: 36px;
   }
 
   .cartao {
     flex-direction: row;
-    max-width: 880px;
+    max-width: 900px;
     width: 100%;
     height: 480px;
     align-items: stretch;
   }
 
-  .cartao::after {
-    content: '';
-    position: absolute;
-    top: -60px;
-    left: 240px;
-    width: 2px;
-    height: 200%;
-    background: linear-gradient(to bottom, transparent, rgba(255,255,255,.05), transparent);
-    transform: rotate(-20deg);
-    pointer-events: none;
-    z-index: 1;
-  }
-
+  /* Left panel — vertical glass column */
   .painel-esq {
     flex-direction: column;
     flex-shrink: 0;
@@ -380,14 +449,27 @@ body {
     height: 100%;
     padding: 32px 20px;
     border-bottom: none;
-    border-right: 1px solid rgba(255,255,255,.07);
+    border-right: 1px solid rgba(255,255,255,0.12);
     justify-content: center;
     gap: 18px;
   }
 
+  .painel-esq::after {
+    top: 0; left: 0; right: auto; bottom: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(255,255,255,0.3) 30%,
+      rgba(255,255,255,0.3) 70%,
+      transparent
+    );
+  }
+
   .logo-estrela {
-    width: 68px;
-    height: 68px;
+    width: 66px;
+    height: 66px;
   }
 
   .instituicao {
@@ -395,32 +477,36 @@ body {
   }
 
   .inst-modulo {
-    font-size: 28px;
+    font-size: 27px;
   }
 
   .inst-sub {
-    font-size: 10px;
+    font-size: 9.5px;
   }
 
   .divider {
     display: block;
     width: 40px;
     height: 1px;
-    background: rgba(245,168,0,.35);
+    background: rgba(245,168,0,0.30);
+    box-shadow: 0 0 8px rgba(245,168,0,0.25);
   }
 
   .tipo-cartao {
     margin-left: 0;
     writing-mode: horizontal-tb;
     rotate: none;
-    font-size: 9px;
+    font-size: 8.5px;
     letter-spacing: .22em;
   }
 
+  /* Center content */
   .conteudo {
     flex: 1;
     padding: 36px 40px 36px 44px;
     justify-content: center;
+    border-top: none;
+    border-left: 1px solid rgba(255,255,255,0.06);
   }
 
   .nome-aluno {
@@ -428,12 +514,13 @@ body {
   }
 
   .badge-curso {
-    margin-bottom: 26px;
+    margin-bottom: 24px;
   }
 
+  /* Right photo panel */
   .painel-foto {
     flex-shrink: 0;
-    width: 200px;
+    width: 210px;
     height: 100%;
     overflow: hidden;
   }
@@ -448,18 +535,15 @@ body {
   .painel-foto::before {
     background: linear-gradient(
       to right,
-      rgba(6,7,107,.88) 0%,
-      transparent 45%
+      rgba(10,20,100,0.85) 0%,
+      rgba(10,20,100,0.20) 40%,
+      transparent 70%
     );
   }
 
+  /* Index */
   .index-title {
-    font-size: 64px;
-  }
-
-  .index-sub {
-    font-size: 11px;
-    letter-spacing: .25em;
+    font-size: 68px;
   }
 
   .grid-alunos {
@@ -470,9 +554,9 @@ body {
   .grid-alunos a {
     flex-direction: column;
     align-items: flex-start;
-    padding: 16px 20px;
-    border-radius: 16px;
-    gap: 16px;
+    padding: 18px 20px;
+    border-radius: 18px;
+    gap: 18px;
   }
 
   .grid-alunos a::after {

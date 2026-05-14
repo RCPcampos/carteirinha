@@ -1,0 +1,481 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&display=swap');
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --brand-dark:   #03031a;
+  --brand-mid:    #050596;
+  --brand-accent: #f5a800;
+  --radius:       20px;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #c8cde4;
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(5,5,180,.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(245,168,0,.10) 0%, transparent 60%);
+  font-family: var(--font-body);
+  padding: 24px 16px 40px;
+  gap: 24px;
+}
+
+/* Botão voltar */
+.back-link {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--brand-mid);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 8px 18px;
+  border: 1.5px solid var(--brand-mid);
+  border-radius: 100px;
+  background: rgba(255,255,255,.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: background .2s, color .2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.back-link:active,
+.back-link:hover {
+  background: var(--brand-mid);
+  color: #fff;
+}
+.back-link::before {
+  content: '←';
+  font-size: 14px;
+}
+
+/* Cartao — mobile (retrato, vertical) */
+.cartao {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(160deg, #03031a 0%, #06076b 50%, #0a0ab5 100%);
+  box-shadow:
+    0 2px 4px rgba(0,0,0,.08),
+    0 16px 48px rgba(3,3,26,.52),
+    0 0 0 1px rgba(255,255,255,.06);
+  color: #fff;
+}
+
+.cartao::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Header do cartão */
+.painel-esq {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: rgba(0,0,0,.30);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  position: relative;
+  z-index: 2;
+}
+
+.logo-estrela {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 8px rgba(245,168,0,.55));
+}
+
+.instituicao {
+  line-height: 1.2;
+}
+
+.inst-modulo {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: .06em;
+  color: var(--brand-accent);
+}
+
+.inst-sub {
+  display: block;
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+}
+
+.divider {
+  display: none;
+}
+
+.tipo-cartao {
+  margin-left: auto;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.28);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  rotate: 180deg;
+}
+
+/* Foto */
+.painel-foto {
+  position: relative;
+  width: 100%;
+  z-index: 2;
+}
+
+.painel-foto::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(3,3,26,.4) 0%,
+    transparent 15%,
+    transparent 75%,
+    rgba(5,5,107,.95) 100%
+  );
+  z-index: 1;
+}
+
+.foto-perfil {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: grayscale(10%) contrast(1.06);
+}
+
+/* Informações */
+.conteudo {
+  position: relative;
+  z-index: 2;
+  padding: 24px 24px 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.label-id {
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--brand-accent);
+  opacity: .8;
+  margin-bottom: 8px;
+}
+
+.nome-aluno {
+  font-family: var(--font-display);
+  font-size: 32px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  line-height: 1.05;
+  color: #fff;
+  margin-bottom: 14px;
+}
+
+.badge-curso {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 5px 14px;
+  border: 1px solid rgba(245,168,0,.4);
+  border-radius: 100px;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--brand-accent);
+  background: rgba(245,168,0,.08);
+  margin-bottom: 22px;
+}
+
+.infos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.info-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.info-label {
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+  min-width: 48px;
+  flex-shrink: 0;
+}
+
+.info-valor {
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(255,255,255,.85);
+  letter-spacing: .02em;
+}
+
+.validade-chip {
+  margin-top: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+}
+
+.validade-chip span {
+  color: rgba(255,255,255,.7);
+  font-weight: 400;
+  font-size: 11.5px;
+  letter-spacing: .05em;
+}
+
+/* Página index */
+.index-wrapper {
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  padding: 32px 20px 48px;
+}
+
+.index-logo {
+  width: 64px;
+  margin-bottom: 14px;
+  filter: drop-shadow(0 0 14px rgba(245,168,0,.4));
+}
+
+.index-title {
+  font-family: var(--font-display);
+  font-size: 52px;
+  letter-spacing: .06em;
+  color: var(--brand-mid);
+  line-height: 1;
+}
+
+.index-sub {
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(3,3,26,.38);
+  margin-top: 6px;
+  margin-bottom: 36px;
+}
+
+.grid-alunos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  list-style: none;
+}
+
+.grid-alunos a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--brand-mid);
+  padding: 14px 16px;
+  border: 1.5px solid rgba(5,5,150,.22);
+  border-radius: 14px;
+  background: rgba(255,255,255,.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background .2s, border-color .2s, color .2s, box-shadow .2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.grid-alunos a:active,
+.grid-alunos a:hover {
+  background: var(--brand-mid);
+  border-color: var(--brand-mid);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(5,5,180,.32);
+}
+
+.grid-alunos a::after {
+  content: '→';
+  opacity: .5;
+  font-size: 15px;
+}
+
+/* Desktop — cartao horizontal (>= 700px) */
+@media (min-width: 700px) {
+
+  body {
+    padding: 48px 24px;
+    gap: 36px;
+  }
+
+  .cartao {
+    flex-direction: row;
+    max-width: 880px;
+    width: 100%;
+    height: 480px;
+    align-items: stretch;
+  }
+
+  .cartao::after {
+    content: '';
+    position: absolute;
+    top: -60px;
+    left: 240px;
+    width: 2px;
+    height: 200%;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,.05), transparent);
+    transform: rotate(-20deg);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .painel-esq {
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 220px;
+    height: 100%;
+    padding: 32px 20px;
+    border-bottom: none;
+    border-right: 1px solid rgba(255,255,255,.07);
+    justify-content: center;
+    gap: 18px;
+  }
+
+  .logo-estrela {
+    width: 68px;
+    height: 68px;
+  }
+
+  .instituicao {
+    text-align: center;
+  }
+
+  .inst-modulo {
+    font-size: 28px;
+  }
+
+  .inst-sub {
+    font-size: 10px;
+  }
+
+  .divider {
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: rgba(245,168,0,.35);
+  }
+
+  .tipo-cartao {
+    margin-left: 0;
+    writing-mode: horizontal-tb;
+    rotate: none;
+    font-size: 9px;
+    letter-spacing: .22em;
+  }
+
+  .conteudo {
+    flex: 1;
+    padding: 36px 40px 36px 44px;
+    justify-content: center;
+  }
+
+  .nome-aluno {
+    font-size: 30px;
+  }
+
+  .badge-curso {
+    margin-bottom: 26px;
+  }
+
+  .painel-foto {
+    flex-shrink: 0;
+    width: 200px;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .foto-perfil {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .painel-foto::before {
+    background: linear-gradient(
+      to right,
+      rgba(6,7,107,.88) 0%,
+      transparent 45%
+    );
+  }
+
+  .index-title {
+    font-size: 64px;
+  }
+
+  .index-sub {
+    font-size: 11px;
+    letter-spacing: .25em;
+  }
+
+  .grid-alunos {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .grid-alunos a {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 20px;
+    border-radius: 16px;
+    gap: 16px;
+  }
+
+  .grid-alunos a::after {
+    align-self: flex-end;
+  }
+}
